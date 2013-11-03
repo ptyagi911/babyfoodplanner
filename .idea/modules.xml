@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BabyFoodPlanner.iml" filepath="$PROJECT_DIR$/BabyFoodPlanner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/babyfoodplanner.iml" filepath="$PROJECT_DIR$/babyfoodplanner.iml" />
     </modules>
   </component>
 </project>
