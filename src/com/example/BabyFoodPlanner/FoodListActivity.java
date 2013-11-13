@@ -110,13 +110,15 @@ public class FoodListActivity extends ExpandableListActivity implements SearchVi
      */
     public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         // Sample data set.  foodNames[i] contains the foodNames (String[]) for foodGroups[i].
-        private String[] foodGroups = {
-                "Lentils",
-                "Vegetables",
-                "Fruits",
-                "Dairy",
-                "Grains"
-        };
+//        private String[] foodGroups = {
+//                "Lentils",
+//                "Vegetables",
+//                "Fruits",
+//                "Dairy",
+//                "Grains"
+//        };
+
+        private String[] foodGroups = {NotePad.Notes.COLUMN_NAME_TITLE};
 
         private String[][] foodNames = {
                 {"Moong", "Masoor", "Lobia", "Rajma", "Chana", "Kala Chana", "Moth"},

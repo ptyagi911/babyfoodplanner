@@ -40,4 +40,11 @@
     <string name="btn_toggle_tabs">Toggle tab mode</string>
     <string name="btn_remove_all_tabs">Remove all tabs</string>
 
+    <string name="menu_add">New note</string>
+    <string name="menu_save">Save</string>
+    <string name="menu_delete">Delete</string>
+    <string name="menu_open">Open</string>
+    <string name="menu_revert">Revert changes</string>
+    <string name="menu_copy">Copy</string>
+    <string name="menu_paste">Paste</string>
 </resources>
