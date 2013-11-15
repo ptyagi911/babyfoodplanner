@@ -25,11 +25,11 @@ import android.provider.BaseColumns;
  * is a public, non-extendable (final) class that contains constants defining column names and
  * URIs. A well-written client depends only on the constants in the contract.
  */
-public final class NotePad {
+public final class FoodPlanner {
     public static final String AUTHORITY = "com.google.provider.FoodPlanner";
 
     // This class cannot be instantiated
-    private NotePad() {
+    private FoodPlanner() {
     }
 
     /**
@@ -43,7 +43,7 @@ public final class NotePad {
         /**
          * The table name offered by this provider
          */
-        public static final String TABLE_NAME = "notes";
+        public static final String TABLE_NAME = "foods";
 
         /*
          * URI definitions
@@ -120,13 +120,19 @@ public final class NotePad {
          * Column name for the title of the note
          * <P>Type: TEXT</P>
          */
-        public static final String COLUMN_NAME_TITLE = "title";
+        public static final String COLUMN_NAME_FOOD_FAMILY = "food_family";
 
         /**
          * Column name of the note content
          * <P>Type: TEXT</P>
          */
-        public static final String COLUMN_NAME_NOTE = "note";
+        public static final String COLUMN_NAME_FOOD_NAME = "food_name";
+
+        /**
+         * Column name for the day food is planned for
+         * <P>Type: TEXT</P>
+         */
+        public static final String COLUMN_NAME_DAY_PLANNED = "day_planned";
 
         /**
          * Column name for the creation timestamp

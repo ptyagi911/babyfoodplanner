@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
+import org.json.JSONException;
 
 public class FoodListActivity extends ExpandableListActivity implements SearchView.OnQueryTextListener {
 
@@ -12,6 +13,7 @@ public class FoodListActivity extends ExpandableListActivity implements SearchVi
     int mSortMode = -1;
 
     ExpandableListAdapter mAdapter;
+    private static FoodManager mFoodManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -19,6 +21,7 @@ public class FoodListActivity extends ExpandableListActivity implements SearchVi
 
         //setup search text box
         mSearchText = new TextView(this);
+        mFoodManager = new FoodManager(this);
 
         // Set up our adapter
         mAdapter = new MyExpandableListAdapter();
@@ -118,7 +121,21 @@ public class FoodListActivity extends ExpandableListActivity implements SearchVi
 //                "Grains"
 //        };
 
-        private String[] foodGroups = {NotePad.Notes.COLUMN_NAME_TITLE};
+//        private String[] foodGroups =
+//                {FoodPlanner.Notes.COLUMN_NAME_FOOD_FAMILY,
+//                FoodPlanner.Notes.COLUMN_NAME_FOOD_NAME};
+//
+//        private String[][] foodNames = {
+//                {"Moong", "Masoor", "Lobia", "Rajma", "Chana", "Kala Chana", "Moth"},
+//                {"Zuchini", "Squash", "Carrots", "Sweet Patatos", "Broccoli", "Avocado", "Peas", "Potato"},
+//                {"Grapes", "Strawberry", "Blueberry", "Banana", "Oranage", "Pear", "Peaches", "Plums"},
+//                {"Dairy", "Milk", "Cheese", "Tofu", "Yogurt"},
+//                {"Pasta", "Brown Rice", "BabyFoodMix Parantha"}
+//
+//        };
+
+        private String[] foodGroups =  getFoodGroups();
+
 
         private String[][] foodNames = {
                 {"Moong", "Masoor", "Lobia", "Rajma", "Chana", "Kala Chana", "Moth"},
@@ -128,6 +145,25 @@ public class FoodListActivity extends ExpandableListActivity implements SearchVi
                 {"Pasta", "Brown Rice", "BabyFoodMix Parantha"}
 
         };
+
+        //Query from database to get food families
+        public String[] getFoodGroups() {
+            try {
+                mFoodManager.parseFoodGroups();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String[] foodGroups = mFoodManager.getFoodGroups();
+//            String[] foodGroups = {
+//                "Lentils",
+//                "Vegetables",
+//                "Fruits",
+//                "Dairy",
+//                "Grains"
+//            };
+
+            return foodGroups;
+        }
 
         public Object getChild(int groupPosition, int childPosition) {
             return foodNames[groupPosition][childPosition];
