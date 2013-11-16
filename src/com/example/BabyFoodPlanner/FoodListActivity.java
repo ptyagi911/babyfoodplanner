@@ -135,16 +135,16 @@ public class FoodListActivity extends ExpandableListActivity implements SearchVi
 //        };
 
         private String[] foodGroups =  getFoodGroups();
+        private String[][] foodNames = getFoodNames();
 
-
-        private String[][] foodNames = {
-                {"Moong", "Masoor", "Lobia", "Rajma", "Chana", "Kala Chana", "Moth"},
-                {"Zuchini", "Squash", "Carrots", "Sweet Patatos", "Broccoli", "Avocado", "Peas", "Potato"},
-                {"Grapes", "Strawberry", "Blueberry", "Banana", "Oranage", "Pear", "Peaches", "Plums"},
-                {"Dairy", "Milk", "Cheese", "Tofu", "Yogurt"},
-                {"Pasta", "Brown Rice", "BabyFoodMix Parantha"}
-
-        };
+//        private String[][] foodNames = {
+//                {"Moong", "Masoor", "Lobia", "Rajma", "Chana", "Kala Chana", "Moth"},
+//                {"Zuchini", "Squash", "Carrots", "Sweet Patatos", "Broccoli", "Avocado", "Peas", "Potato"},
+//                {"Grapes", "Strawberry", "Blueberry", "Banana", "Oranage", "Pear", "Peaches", "Plums"},
+//                {"Dairy", "Milk", "Cheese", "Tofu", "Yogurt"},
+//                {"Pasta", "Brown Rice", "BabyFoodMix Parantha"}
+//
+//        };
 
         //Query from database to get food families
         public String[] getFoodGroups() {
@@ -163,6 +163,25 @@ public class FoodListActivity extends ExpandableListActivity implements SearchVi
 //            };
 
             return foodGroups;
+        }
+
+        //Query from database to get food families
+        public String[][] getFoodNames() {
+//            try {
+//                mFoodManager.parseFoodGroups();
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+            String[][] foodNames = mFoodManager.getFoodNames();
+//            String[] foodGroups = {
+//                "Lentils",
+//                "Vegetables",
+//                "Fruits",
+//                "Dairy",
+//                "Grains"
+//            };
+
+            return foodNames;
         }
 
         public Object getChild(int groupPosition, int childPosition) {
