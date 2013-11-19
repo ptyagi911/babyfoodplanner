@@ -8,10 +8,10 @@
           android:actionViewClass="android.widget.SearchView" />
     <item android:id="@+id/action_add"
           android:icon="@android:drawable/ic_menu_add"
-          android:title="@string/action_bar_add" />
+          android:title="@string/action_bar_add"
+          android:showAsAction="always"/>
     <item android:id="@+id/action_edit"
           android:icon="@android:drawable/ic_menu_edit"
-          android:showAsAction="always"
           android:title="@string/action_bar_edit" />
     <item android:id="@+id/action_share"
           android:icon="@android:drawable/ic_menu_share"

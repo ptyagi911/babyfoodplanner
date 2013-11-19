@@ -18,6 +18,7 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class FoodManager {
+    final String TAG = this.getClass().getSimpleName();
 
     private static FoodManagerHelper mHelper = null;
     private static Context mContext = null;
@@ -56,8 +57,18 @@ public class FoodManager {
                 assign(foodBank.length(), fg, fgKey, i);
             }
         }
+    }
 
-
+    //TODO
+    public void addFoodItem(int foodGroup, String foodName) {
+        if (foodNamesMap.containsKey(foodGroup) > 0) {
+            ArrayList<String> foodNames = foodNamesMap.get(foodGroup);
+            foodNames.add(foodName);
+            foodNamesMap.put(foodGroup, foodNames);
+        } else {
+            //Food Group doesn't exist
+            Log.e(TAG, "Food group doesn't exist");
+        }
     }
 
     private void assign(int foodBankSize, JSONObject foodGroup, String foodGroupKey, int groupIndex) throws JSONException {
@@ -78,8 +89,6 @@ public class FoodManager {
 
         foodGroups[groupIndex] = foodGroupKey;
 
-        //foodNames[groupIndex] = foods;
-
         foodNamesMap.put(groupIndex, foodNamesList);
     }
 
@@ -95,27 +104,11 @@ public class FoodManager {
         for (Map.Entry pair : foodNamesMap.entrySet()) {
             Integer key = (Integer)pair.getKey();
             ArrayList<String> foodList = (ArrayList<String>)pair.getValue();
-//            String[] foodArray = new String[foodList.size()];
-//            foodArray = foodList.toArray(foodArray);
 
             for(int i=0; i < foodList.size(); i++) {
                 foodNames[key][i] = (String)foodList.get(i);
             }
         }
-//        while(iterator.hasNext()) {
-//            Map.Entry<Integer, ArrayList<String>> pair = (Map.Entry<Integer, ArrayList<String>>)iterator.next();
-//            Integer key = (Integer)pair.getKey();
-//            ArrayList<String> foodList = (ArrayList<String>)pair.getValue();
-////            String[] foodArray = new String[foodList.size()];
-////            foodArray = foodList.toArray(foodArray);
-//
-//            for(int i=0; i < foodList.size(); i++) {
-//                foodNames[key][i] = (String)foodList.get(i);
-//            }
-
-            //foodNames[key][counter++] = foodArray;
-//        }
-
         return foodNames;
     }
 }

@@ -9,6 +9,13 @@ package com.bot.BabyFoodPlanner;
  */
 public final class FoodLiterals {
 
+
+    public static final String PREFS_FG = "";
+
+    public static final String PREFS_FN = "";
+
+    public static final String PREFS_FG_FN_MAP = "";
+
     public static final String SHARED_PREFS_KEY_FOOD_BANK = "shared_prefs_key_food_items";
 
     /**
@@ -47,5 +54,8 @@ public final class FoodLiterals {
 
     public static final String GRAINS_BREAD = "Bread";
     public static final String GRAINS_BROWN_RICE = "Brown Rice";
+
+
+
 
 }

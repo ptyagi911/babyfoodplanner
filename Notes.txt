@@ -7,4 +7,33 @@ Proposed table structure:
 |------------------------------------------------------------
 | Veggies    | Zucchini  | Sunday      |           |        |
 |------------------------------------------------------------
-|
+
+Workflow UIs:
+1- Main screen: Grid layout. Gives option to jump to day, bookmarks and foodlisting.
+2- Food picker: To be able to add food to a day.
+3- Food Listing: Displays all foods available grouped by food group.
+4- Food Adder: To be able to add Food to available foods.
+
+DataStructures
+
+PREFS_FF:
+=================
+| KEY | VALUE   |
+----------------
+| 0   | Lentils |
+=================
+
+PREFS_FFM:
+===============
+| KEY | VALUE |
+---------------
+| 0   | Moong |
+===============
+
+PREFS_FF_FFM_MAP:
+===================
+| FF_KEY | FFM_KEY|
+-------------------
+| 0      |  0,1,2 |
+===================
+

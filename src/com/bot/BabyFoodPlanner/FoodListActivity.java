@@ -51,7 +51,17 @@ public class FoodListActivity extends ExpandableListActivity implements SearchVi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Toast.makeText(this, "Selected item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Selected item: " + item.getTitle() +
+                ", Id: " + item.getItemId(), Toast.LENGTH_SHORT).show();
+
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                Toast.makeText(this, "Add new item", Toast.LENGTH_LONG).show();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
         return true;
     }
 
