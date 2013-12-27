@@ -1,4 +1,4 @@
-package com.bot.BabyFoodPlanner;
+package com.bot.babyfoodplanner;
 
 import android.app.ExpandableListActivity;
 import android.graphics.drawable.Drawable;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 import org.json.JSONException;
+
+import android.content.Intent;
 
 public class FoodListActivity extends ExpandableListActivity implements SearchView.OnQueryTextListener {
 
@@ -57,6 +59,8 @@ public class FoodListActivity extends ExpandableListActivity implements SearchVi
         switch (item.getItemId()) {
             case R.id.action_add:
                 Toast.makeText(this, "Add new item", Toast.LENGTH_LONG).show();
+                Intent foodEditorIntent = new Intent(this, FoodEditor.class);
+                startActivity(foodEditorIntent);
                 break;
             default:
                 return super.onOptionsItemSelected(item);

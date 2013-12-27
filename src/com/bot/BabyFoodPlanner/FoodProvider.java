@@ -1,3 +1,4 @@
+package com.bot.babyfoodplanner;
 ///*
 // * Copyright (C) 2007 The Android Open Source Project
 // *

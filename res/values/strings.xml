@@ -47,4 +47,7 @@
     <string name="menu_revert">Revert changes</string>
     <string name="menu_copy">Copy</string>
     <string name="menu_paste">Paste</string>
+    
+    <string name="home_flavors">Flavors</string>
+    <string name="home_menus">Menus</string>
 </resources>

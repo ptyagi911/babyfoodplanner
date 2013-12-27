@@ -1,4 +1,4 @@
-package com.bot.BabyFoodPlanner;
+package com.bot.babyfoodplanner;
 
 import android.app.Activity;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.bot.BabyFoodPlanner;
+package com.bot.babyfoodplanner;
 
 import android.content.Context;
 import org.json.JSONArray;
@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import android.util.Log;
 
 /**
  * Created with IntelliJ IDEA.
@@ -61,7 +62,7 @@ public class FoodManager {
 
     //TODO
     public void addFoodItem(int foodGroup, String foodName) {
-        if (foodNamesMap.containsKey(foodGroup) > 0) {
+        if (foodNamesMap.containsKey(foodGroup)) {
             ArrayList<String> foodNames = foodNamesMap.get(foodGroup);
             foodNames.add(foodName);
             foodNamesMap.put(foodGroup, foodNames);

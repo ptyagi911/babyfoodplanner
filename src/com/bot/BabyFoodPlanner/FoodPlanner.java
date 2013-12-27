@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bot.BabyFoodPlanner;
+package com.bot.babyfoodplanner;
 
 import android.net.Uri;
 import android.provider.BaseColumns;

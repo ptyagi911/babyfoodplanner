@@ -1,4 +1,4 @@
-package com.bot.BabyFoodPlanner;
+package com.bot.babyfoodplanner;
 
 /**
  * Created with IntelliJ IDEA.
