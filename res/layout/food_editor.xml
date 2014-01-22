@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
+              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+           
 
+<GridLayout android:id="@+id/gridView1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:numColumns="4" >
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -16,23 +21,57 @@
             android:layout_height="31dp"
             android:id="@+id/spinner_fg"
             android:layout_gravity="center_horizontal|top"
-            android:layout_marginLeft="100dp"/>
+            />
 
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New"
             android:id="@+id/fg_new"
-            android:layout_gravity="left"
-            android:layout_weight="0"
-            android:background="@drawable/btn_plus"/>
+            android:onClick="addFoodGroup"/>
 
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Delete"
             android:id="@+id/fg_del"
-            android:layout_gravity="right"
-            android:layout_weight="0"/>
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:onClick="removeFoodGroup"/>
+</GridLayout> 
+<GridLayout android:id="@+id/gridView2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:numColumns="4">
+    <!-- Food name editor -->
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Food Name"
+            android:id="@+id/textViewFN"/>
+
+    <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="31dp"
+            android:id="@+id/spinner_fn"
+            android:layout_gravity="center_horizontal|top"
+	/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New"
+            android:id="@+id/fn_new"
+            android:onClick="addFoodName"/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:id="@+id/fn_del"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:onClick="removeFoodName"/>
+</GridLayout>
 
 </LinearLayout>
