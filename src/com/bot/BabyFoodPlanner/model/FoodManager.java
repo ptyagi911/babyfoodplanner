@@ -28,8 +28,10 @@ public class FoodManager {
 
     private static String[] foodGroups;
     private static String[][] foodNames;
-    private static HashMap<Integer, ArrayList<String>> foodNamesMap = new HashMap<Integer, ArrayList<String>>();
+    private static HashMap<Integer, ArrayList<String>> foodBankMap = new HashMap<Integer, ArrayList<String>>();
 
+    private static Integer foodBankSize = 0;
+    
     public FoodManager(Context context) {
         mContext = context;
         mHelper = FoodManagerHelper.getInstance(context);
@@ -38,43 +40,45 @@ public class FoodManager {
     public void parseFoodGroups() throws JSONException {
         JSONArray foodBank = mHelper.retrieveFoodBank();
         foodGroups = new String[foodBank.length()];
-
-        for (int i=0; i < foodBank.length(); i++) {
+        foodBankSize = foodBank.length();
+        
+        for (int i=0; i < foodBankSize; i++) {
             JSONObject fg = foodBank.getJSONObject(i);
 
             if (fg.has(FoodLiterals.FG_LENTILS)) {
                 String fgKey = FoodLiterals.FG_LENTILS;
                 //foodGroups = key;
-                assign(foodBank.length(), fg, fgKey, i);
+                assign(fg, fgKey, i);
             } else if (fg.has(FoodLiterals.FG_VEGGIES)) {
                 String fgKey = FoodLiterals.FG_VEGGIES;
-                assign(foodBank.length(), fg, fgKey, i);
+                assign(fg, fgKey, i);
             } else if (fg.has(FoodLiterals.FG_FRUITS)) {
                 String fgKey = FoodLiterals.FG_FRUITS;
-                assign(foodBank.length(), fg, fgKey, i);
+                assign(fg, fgKey, i);
             } else if (fg.has(FoodLiterals.FG_DAIRY)) {
                 String fgKey = FoodLiterals.FG_DAIRY;
-                assign(foodBank.length(), fg, fgKey, i);
+                assign(fg, fgKey, i);
             } else if (fg.has(FoodLiterals.FG_GRAINS)) {
                 String fgKey = FoodLiterals.FG_GRAINS;
-                assign(foodBank.length(), fg, fgKey, i);
+                assign(fg, fgKey, i);
             }
         }
     }
 
     //TODO
     public void addFoodItem(int foodGroup, String foodName) {
-        if (foodNamesMap.containsKey(foodGroup)) {
-            ArrayList<String> foodNames = foodNamesMap.get(foodGroup);
+        if (foodBankMap.containsKey(foodGroup)) {
+            ArrayList<String> foodNames = foodBankMap.get(foodGroup);
             foodNames.add(foodName);
-            foodNamesMap.put(foodGroup, foodNames);
+            foodBankMap.put(foodGroup, foodNames);
         } else {
             //Food Group doesn't exist
             Log.e(TAG, "Food group doesn't exist");
         }
     }
 
-    private void assign(int foodBankSize, JSONObject foodGroup, String foodGroupKey, int groupIndex) throws JSONException {
+    private void assign(JSONObject foodGroup, 
+    		String foodGroupKey, int groupIndex) throws JSONException {
         JSONObject foodItems = foodGroup.getJSONObject(foodGroupKey);
         Iterator<String> keys = foodItems.keys();
 
@@ -92,7 +96,7 @@ public class FoodManager {
 
         foodGroups[groupIndex] = foodGroupKey;
 
-        foodNamesMap.put(groupIndex, foodNamesList);
+        foodBankMap.put(groupIndex, foodNamesList);
     }
 
     public String[] getFoodGroups() {
@@ -105,10 +109,10 @@ public class FoodManager {
     
     public String[][] getFoodNames() {
 
-        Iterator<?> iterator = foodNamesMap.keySet().iterator();
+        Iterator<?> iterator = foodBankMap.keySet().iterator();
         int counter = 0;
 
-        for (Map.Entry pair : foodNamesMap.entrySet()) {
+        for (Map.Entry pair : foodBankMap.entrySet()) {
             Integer key = (Integer)pair.getKey();
             ArrayList<String> foodList = (ArrayList<String>)pair.getValue();
 
@@ -117,5 +121,10 @@ public class FoodManager {
             }
         }
         return foodNames;
+    }
+    
+    public void persistFoodBank(
+    		HashMap<Integer, ArrayList<String>> foodBankMap) {
+    	
     }
 }
