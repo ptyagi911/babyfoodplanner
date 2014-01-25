@@ -172,9 +172,34 @@ public class FoodManager {
     		ArrayList<String> foodNamesList) {
     	int foodGroupIndex = fgKeyMap.get(fgKey);
     	foodBankMap.put(foodGroupIndex, foodNamesList);
+    	
+    	try {
+    		persistFoodBank();
+    	} catch (JSONException e) {
+    		e.printStackTrace();
+    	}
     }
     
-    public void persistFoodBank() {
+    public void persistFoodBank() throws JSONException {
+    	JSONArray jsonArray = new JSONArray();
     	
+    	for (Map.Entry<Integer, ArrayList<String>> pair:
+    		foodBankMap.entrySet()) {
+    		Integer key = (Integer)pair.getKey();
+            ArrayList<String> foodList = (ArrayList<String>)pair.getValue();
+            String fgKey = foodGroups[key];
+            		
+            JSONObject foodGroup = new JSONObject();
+            JSONObject foodNames = new JSONObject();
+         
+            for (String foodName : foodList) {
+            	foodNames.put(foodName, foodName);
+			}
+            
+            foodGroup.put(fgKey, foodNames);
+            jsonArray.put(foodGroup);
+    	}
+    	
+    	mHelper.updateFoodBank(jsonArray);
     }
 }

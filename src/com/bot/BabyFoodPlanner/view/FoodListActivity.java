@@ -172,8 +172,8 @@ public class FoodListActivity extends ExpandableListActivity implements SearchVi
      */
     public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
-        private String[] foodGroups =  getFoodGroups();
-        private String[][] foodNames = getFoodNames();
+        private String[] foodGroups;
+        private String[][] foodNames;
 
         public MyExpandableListAdapter() {
         	foodGroups =  getFoodGroups();
