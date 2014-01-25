@@ -1,18 +1,29 @@
 package com.bot.babyfoodplanner.view;
 
-import android.app.ExpandableListActivity;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.view.*;
-import android.widget.*;
 import org.json.JSONException;
 
-import com.bot.babyfoodplanner.R;
-import com.bot.babyfoodplanner.R.id;
-import com.bot.babyfoodplanner.R.menu;
-import com.bot.babyfoodplanner.model.FoodManager;
-
+import android.app.ExpandableListActivity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
+import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bot.babyfoodplanner.R;
+import com.bot.babyfoodplanner.model.FoodManager;
 
 public class FoodListActivity extends ExpandableListActivity implements SearchView.OnQueryTextListener {
 
@@ -28,12 +39,12 @@ public class FoodListActivity extends ExpandableListActivity implements SearchVi
 
         //setup search text box
         mSearchText = new TextView(this);
-        mFoodManager = new FoodManager(this);
+        mFoodManager = FoodManager.getInstance(getApplicationContext());
 
         // Set up our adapter
-        mAdapter = new MyExpandableListAdapter();
-        setListAdapter(mAdapter);
-        registerForContextMenu(getExpandableListView());
+//        mAdapter = new MyExpandableListAdapter();
+//        setListAdapter(mAdapter);
+//        registerForContextMenu(getExpandableListView());
     }
 
     public static FoodManager getFoodManager() {
@@ -128,6 +139,31 @@ public class FoodListActivity extends ExpandableListActivity implements SearchVi
         return false;
     }
 
+    //Activity lifecycle 
+    public void onStop() {
+    	Log.d("Priyanka", "OnStop is called");
+    	super.onStop();
+    }
+    
+    public void onResume() {
+    	Log.d("Priyanka", "OnResume is called");
+    	mAdapter = new MyExpandableListAdapter();
+        setListAdapter(mAdapter);
+        registerForContextMenu(getExpandableListView());
+    	super.onResume();
+    }
+    
+    public void onPause() {
+    	Log.d("Priyanka", "OnPause is called");
+    	unregisterForContextMenu(getExpandableListView());
+    	super.onPause();
+    }
+    
+    public void onRestart() {
+    	Log.d("Priyanka", "onRestart is called");
+    	super.onRestart();
+    }
+    
     /**
      * A simple adapter which maintains an ArrayList of photo resource Ids.
      * Each photo is displayed as an image. This adapter supports clearing the
@@ -135,40 +171,17 @@ public class FoodListActivity extends ExpandableListActivity implements SearchVi
      *
      */
     public class MyExpandableListAdapter extends BaseExpandableListAdapter {
-        // Sample data set.  foodNames[i] contains the foodNames (String[]) for foodGroups[i].
-//        private String[] foodGroups = {
-//                "Lentils",
-//                "Vegetables",
-//                "Fruits",
-//                "Dairy",
-//                "Grains"
-//        };
-
-//        private String[] foodGroups =
-//                {FoodPlanner.Notes.COLUMN_NAME_FOOD_FAMILY,
-//                FoodPlanner.Notes.COLUMN_NAME_FOOD_NAME};
-//
-//        private String[][] foodNames = {
-//                {"Moong", "Masoor", "Lobia", "Rajma", "Chana", "Kala Chana", "Moth"},
-//                {"Zuchini", "Squash", "Carrots", "Sweet Patatos", "Broccoli", "Avocado", "Peas", "Potato"},
-//                {"Grapes", "Strawberry", "Blueberry", "Banana", "Oranage", "Pear", "Peaches", "Plums"},
-//                {"Dairy", "Milk", "Cheese", "Tofu", "Yogurt"},
-//                {"Pasta", "Brown Rice", "BabyFoodMix Parantha"}
-//
-//        };
 
         private String[] foodGroups =  getFoodGroups();
         private String[][] foodNames = getFoodNames();
 
-//        private String[][] foodNames = {
-//                {"Moong", "Masoor", "Lobia", "Rajma", "Chana", "Kala Chana", "Moth"},
-//                {"Zuchini", "Squash", "Carrots", "Sweet Patatos", "Broccoli", "Avocado", "Peas", "Potato"},
-//                {"Grapes", "Strawberry", "Blueberry", "Banana", "Oranage", "Pear", "Peaches", "Plums"},
-//                {"Dairy", "Milk", "Cheese", "Tofu", "Yogurt"},
-//                {"Pasta", "Brown Rice", "BabyFoodMix Parantha"}
-//
-//        };
-
+        public MyExpandableListAdapter() {
+        	foodGroups =  getFoodGroups();
+            foodNames = getFoodNames();
+            Log.d("Priyanka", "MyExpandableListAdapter is called." +
+            		"Last FG: " + foodGroups[foodGroups.length -1]);
+        }
+        
         //Query from database to get food families
         public String[] getFoodGroups() {
             try {
@@ -177,33 +190,13 @@ public class FoodListActivity extends ExpandableListActivity implements SearchVi
                 e.printStackTrace();
             }
             String[] foodGroups = mFoodManager.getFoodGroups();
-//            String[] foodGroups = {
-//                "Lentils",
-//                "Vegetables",
-//                "Fruits",
-//                "Dairy",
-//                "Grains"
-//            };
 
             return foodGroups;
         }
 
         //Query from database to get food families
         public String[][] getFoodNames() {
-//            try {
-//                mFoodManager.parseFoodGroups();
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
             String[][] foodNames = mFoodManager.getFoodNames();
-//            String[] foodGroups = {
-//                "Lentils",
-//                "Vegetables",
-//                "Fruits",
-//                "Dairy",
-//                "Grains"
-//            };
-
             return foodNames;
         }
 

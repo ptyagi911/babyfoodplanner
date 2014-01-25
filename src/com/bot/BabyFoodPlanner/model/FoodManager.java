@@ -1,16 +1,16 @@
 package com.bot.babyfoodplanner.model;
 
-import android.content.Context;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Context;
 import android.util.Log;
 
 /**
@@ -21,23 +21,41 @@ import android.util.Log;
  * To change this template use File | Settings | File Templates.
  */
 public class FoodManager {
-    final String TAG = this.getClass().getSimpleName();
+    final static String TAG = "FoodManager";
 
+    private static FoodManager mInstance;
+    
     private static FoodManagerHelper mHelper = null;
     private static Context mContext = null;
 
     private static String[] foodGroups;
     private static String[][] foodNames;
-    private static HashMap<Integer, ArrayList<String>> foodBankMap = new HashMap<Integer, ArrayList<String>>();
+    private static HashMap<Integer, ArrayList<String>> foodBankMap = 
+    		new HashMap<Integer, ArrayList<String>>();
 
+    private static HashMap<String, Integer>fgKeyMap = 
+    		new HashMap<String, Integer>();
+    
     private static Integer foodBankSize = 0;
     
-    public FoodManager(Context context) {
+    public static FoodManager getInstance(Context context) {
+    	if (mInstance == null) {
+    		mInstance = new FoodManager(context);
+    	}
+    	
+    	return mInstance;
+    }
+    
+    private FoodManager(Context context) {
         mContext = context;
         mHelper = FoodManagerHelper.getInstance(context);
     }
 
     public void parseFoodGroups() throws JSONException {
+    	//hack to disable default loading of contents everytime. enable it back after data persistence is in place
+    	
+    	if (foodBankMap.size() > 0) return;
+    	
         JSONArray foodBank = mHelper.retrieveFoodBank();
         foodGroups = new String[foodBank.length()];
         foodBankSize = foodBank.length();
@@ -83,7 +101,7 @@ public class FoodManager {
         Iterator<String> keys = foodItems.keys();
 
         ArrayList<String> foodNamesList = new ArrayList<String>();
-        foodNames = new String[foodBankSize][foodItems.length()];
+//        foodNames = new String[foodBankSize][foodItems.length()];
         String foods[] = new String[foodItems.length()];
         int counter = 0;
         while(keys.hasNext() ){
@@ -95,7 +113,8 @@ public class FoodManager {
         }
 
         foodGroups[groupIndex] = foodGroupKey;
-
+        fgKeyMap.put(foodGroupKey, groupIndex);
+        
         foodBankMap.put(groupIndex, foodNamesList);
     }
 
@@ -111,20 +130,51 @@ public class FoodManager {
 
         Iterator<?> iterator = foodBankMap.keySet().iterator();
         int counter = 0;
-
+        
+        foodNames = new String[foodBankSize][];
+        
         for (Map.Entry pair : foodBankMap.entrySet()) {
             Integer key = (Integer)pair.getKey();
             ArrayList<String> foodList = (ArrayList<String>)pair.getValue();
-
+            
+            foodNames[key] = new String[foodList.size()];
             for(int i=0; i < foodList.size(); i++) {
-                foodNames[key][i] = (String)foodList.get(i);
+            	foodNames[key][i] = (String)foodList.get(i);
             }
         }
         return foodNames;
     }
     
-    public void persistFoodBank(
-    		HashMap<Integer, ArrayList<String>> foodBankMap) {
+    public ArrayList<String> getFoodNamesList(String fgKey) {
+    	ArrayList<String>foodnames = new ArrayList<String>();
+    	
+    	int fgIndex = fgKeyMap.get(fgKey);
+    	foodnames = foodBankMap.get(fgIndex);
+    	
+    	return foodnames;
+    }
+    
+    //Adds new food group
+    public void addNewFoodGroup(String newFG) {
+    	if (newFG instanceof String && newFG.length() > 0) {
+	    	int currentMaxFGIdx = foodGroups.length - 1;
+	    	int newMaxFGIdx = currentMaxFGIdx + 1;
+	    	foodGroups[newMaxFGIdx] = newFG;
+	    	fgKeyMap.put(newFG, newMaxFGIdx);
+	    	foodBankMap.put(newMaxFGIdx, new ArrayList<String>());
+    	} else {
+    		Log.e(TAG, "Invalid new FG: " + newFG);
+    	}
+    }
+    
+    //Overrides foodnames for selected foodgroup
+    public void updateFoodBank(String fgKey, 
+    		ArrayList<String> foodNamesList) {
+    	int foodGroupIndex = fgKeyMap.get(fgKey);
+    	foodBankMap.put(foodGroupIndex, foodNamesList);
+    }
+    
+    public void persistFoodBank() {
     	
     }
 }
